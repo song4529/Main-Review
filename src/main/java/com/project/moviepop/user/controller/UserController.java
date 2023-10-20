@@ -38,7 +38,7 @@ public class UserController {
         //사용자를 나타내는 URI를 생성
         URI uri = UriComponent.createUri(USER_DEFAULT_URI, createUser.getUserId());
 
-        return null;
+        return ResponseEntity.created(uri).build();
     }
 
     @PatchMapping("/{user-id}") //회원정보 수정
