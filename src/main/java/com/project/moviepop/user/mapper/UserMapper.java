@@ -5,4 +5,6 @@ import com.project.moviepop.user.entity.User;
 
 public interface UserMapper {
     User userPostDtoToUser(UserDto.Post userPostDto);
+
+    User userPatchDtoToUser(UserDto.Patch userPatchDto);
 }
