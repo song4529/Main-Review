@@ -44,12 +44,17 @@ public class UserController {
     @PatchMapping("/{user-id}") //회원정보 수정
     public ResponseEntity patchUser(@PathVariable ("user-id") @Positive long userId,
                                     @Valid @RequestBody UserDto.Patch userPatchDto) {
+        //User에 대한 정보를 가져온다
+        userPatchDto.setUserId(userId);
+        //User의 정보를 수정하는 서비스가 필요하다
+        User user = userService.updateUser(userMapper.userPatchDtoToUser(userPatchDto));
         return null;
     }
 
     @PatchMapping("/{user-id}/password") //비밀번호 수정
     public ResponseEntity patchUserPassword(@PathVariable("user-id") @Positive long userId,
                                             @Valid @RequestBody UserDto.PatchPassword userPatchPasswordDto) {
+        User user = userService.updateUserPassword(userId, userPatchPasswordDto.getCurrentPassword(), userPatchPasswordDto.getNewPassword());
         return null;
     }
 
