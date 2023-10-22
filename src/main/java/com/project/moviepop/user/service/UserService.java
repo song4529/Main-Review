@@ -3,6 +3,7 @@ package com.project.moviepop.user.service;
 import com.project.moviepop.exception.BusinessLogicException;
 import com.project.moviepop.exception.ExceptionCode;
 import com.project.moviepop.user.entity.User;
+import com.project.moviepop.user.entity.UserStatus;
 import com.project.moviepop.user.repository.UserRepository;
 import com.project.moviepop.utils.CustomBeanUtils;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,11 @@ public class UserService {
         findUser.setPassword(newPassword);
 
         return userRepository.save(findUser);
+    }
+
+    public void deleteUser(long userId) {
+        User findUser = verifyUserId(userId);
+        findUser.setUserStatus(UserStatus.USER_WITHDRAW);
     }
 
     //기타 사용된 메서드
