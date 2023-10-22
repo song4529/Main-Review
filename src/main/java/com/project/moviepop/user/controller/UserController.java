@@ -1,6 +1,7 @@
 package com.project.moviepop.user.controller;
 
 
+import com.project.moviepop.dto.ResponseDto;
 import com.project.moviepop.user.dto.UserDto;
 import com.project.moviepop.user.entity.User;
 import com.project.moviepop.user.mapper.UserMapper;
@@ -8,6 +9,7 @@ import com.project.moviepop.user.service.UserService;
 import com.project.moviepop.utils.UriComponent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -48,14 +50,17 @@ public class UserController {
         userPatchDto.setUserId(userId);
         //User의 정보를 수정하는 서비스가 필요하다
         User user = userService.updateUser(userMapper.userPatchDtoToUser(userPatchDto));
-        return null;
+        return new ResponseEntity<>(
+                new ResponseDto.SingleResponseDto<>(userMapper.userToUserPatchDto(user)),
+                HttpStatus.OK
+        );
     }
 
     @PatchMapping("/{user-id}/password") //비밀번호 수정
     public ResponseEntity patchUserPassword(@PathVariable("user-id") @Positive long userId,
                                             @Valid @RequestBody UserDto.PatchPassword userPatchPasswordDto) {
         User user = userService.updateUserPassword(userId, userPatchPasswordDto.getCurrentPassword(), userPatchPasswordDto.getNewPassword());
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{user-id}") //특정 회원정보 조회
@@ -65,6 +70,8 @@ public class UserController {
 
     @DeleteMapping("{user-id}") //회원 삭제
     public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
-        return null;
+        userService.deleteUser(userId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
