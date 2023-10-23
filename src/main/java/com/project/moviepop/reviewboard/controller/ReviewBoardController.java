@@ -32,7 +32,7 @@ public class ReviewBoardController {
         //유저에 대한 정보를 가져온다
         User user = userService.findUser(userId);
         //게시할 리뷰보드 생성
-        ReviewBoard reviewBoard = reviewBoardService.createReviewBoard(user, post);
+        ReviewBoard reviewBoard = reviewBoardService.createReviewBoard(post);
         //유저와의 매핑작업
         userService.addReviewBoard(user, reviewBoard);
         //URI 작업
