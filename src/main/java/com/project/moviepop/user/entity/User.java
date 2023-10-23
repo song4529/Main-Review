@@ -1,11 +1,14 @@
 package com.project.moviepop.user.entity;
 
 
+import com.project.moviepop.reviewboard.entity.ReviewBoard;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,5 +40,7 @@ public class User {
 
     private UserStatus userStatus = UserStatus.USER_ACTIVE;
 
-    //매핑 필요한 것들 보류
+    //매핑
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ReviewBoard> reviewBoards = new ArrayList<>();
 }
