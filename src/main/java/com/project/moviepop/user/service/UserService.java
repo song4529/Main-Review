@@ -2,6 +2,7 @@ package com.project.moviepop.user.service;
 
 import com.project.moviepop.exception.BusinessLogicException;
 import com.project.moviepop.exception.ExceptionCode;
+import com.project.moviepop.reviewboard.entity.ReviewBoard;
 import com.project.moviepop.user.entity.User;
 import com.project.moviepop.user.entity.UserStatus;
 import com.project.moviepop.user.repository.UserRepository;
@@ -67,5 +68,9 @@ public class UserService {
             throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
         }
         return true;
+    }
+
+    public void addReviewBoard(User user, ReviewBoard reviewBoard) {
+        user.getReviewBoards().add(reviewBoard);
     }
 }
