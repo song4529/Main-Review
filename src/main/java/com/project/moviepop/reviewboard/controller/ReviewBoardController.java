@@ -8,6 +8,7 @@ import com.project.moviepop.user.entity.User;
 import com.project.moviepop.user.service.UserService;
 import com.project.moviepop.utils.UriComponent;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,19 @@ public class ReviewBoardController {
         URI uri = UriComponent.createUri(REVIEW_BOARD_DEFAULT_URI, reviewBoard.getReviewBoardId());
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PatchMapping("/{review-id}/users/{user-id}")
+    public ResponseEntity patchReviewBoard(@PathVariable("user-id") @Positive long userId,
+                                           @PathVariable("review-id") @Positive long reviewId,
+                                           @Valid @RequestBody ReviewBoardDto.Patch patch) {
+        //수정할 리뷰보드 아이디를 set해준다
+        patch.setReviewBoardId(reviewId);
+        //수정할 리뷰보드 생성
+        ReviewBoard reviewBoard = reviewBoardService.updateReviewBoard(userId, reviewBoardMapper.PatchToReviewBoard(patch));
+        //리뷰보드 정보를 리턴할 Response를 Mapper를 통해서 생성해준다
+        ReviewBoardDto.Response response = reviewBoardMapper.reviewBoardToResponse(reviewBoard);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
