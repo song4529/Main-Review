@@ -55,4 +55,16 @@ public class ReviewBoardController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping
+    public ResponseEntity getReviewBoard(@PathVariable("review-id") @Positive long reviewId) {
+        return null;
+    }
+
+    @DeleteMapping("/{review-id}/users/{user-id}")
+    public ResponseEntity deleteReviewBoard(@PathVariable("user-id") @Positive long userId,
+                                            @PathVariable("review-id") @Positive long reviewId) {
+        reviewBoardService.deleteReviewBoard(userId, reviewId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
