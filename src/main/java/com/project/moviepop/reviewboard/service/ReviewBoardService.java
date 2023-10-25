@@ -39,6 +39,14 @@ public class ReviewBoardService {
         return reviewBoardRepository.save(getReviewBoard);
     }
 
+    public void deleteReviewBoard(long userId, long reviewId) {
+        ReviewBoard reviewBoard = findReviewBoard(reviewId);
+        if(reviewBoard.getUser().getUserId() != userId)
+            throw new BusinessLogicException(ExceptionCode.CANNOT_UPDATE_REVIEW_BOARD);
+
+        reviewBoardRepository.delete(reviewBoard);
+    }
+
     //추가적인 매서드
     @Transactional(readOnly = true)
     public ReviewBoard findReviewBoard(long reviewBoardId) {
