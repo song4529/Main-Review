@@ -27,7 +27,7 @@ public class ReviewBoardController {
     private final ReviewBoardMapper reviewBoardMapper;
     private final UserService userService;
 
-    @PostMapping("/{user-id}")
+    @PostMapping("/{user-id}") //게시글 작성
     public ResponseEntity postReviewBoard(@PathVariable("/user-id") @Positive long userId,
                                           @Valid @RequestBody ReviewBoardDto.Post post) {
         //유저에 대한 정보를 가져온다
@@ -42,7 +42,7 @@ public class ReviewBoardController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PatchMapping("/{review-id}/users/{user-id}")
+    @PatchMapping("/{review-id}/users/{user-id}") //게시글 수정
     public ResponseEntity patchReviewBoard(@PathVariable("user-id") @Positive long userId,
                                            @PathVariable("review-id") @Positive long reviewId,
                                            @Valid @RequestBody ReviewBoardDto.Patch patch) {
@@ -56,8 +56,14 @@ public class ReviewBoardController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/{review-id}")
     public ResponseEntity getReviewBoard(@PathVariable("review-id") @Positive long reviewId) {
+        return null;
+    }
+
+    @GetMapping
+    public ResponseEntity getAllReviewBoards(@Positive @RequestParam int page,
+                                             @Positive @RequestParam int size) {
         return null;
     }
 
