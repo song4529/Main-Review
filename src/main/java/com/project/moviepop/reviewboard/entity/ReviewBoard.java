@@ -1,6 +1,7 @@
 package com.project.moviepop.reviewboard.entity;
 
 import com.project.moviepop.audit.Auditable;
+import com.project.moviepop.comment.entity.Comment;
 import com.project.moviepop.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,8 @@ public class ReviewBoard extends Auditable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private User user;
+
+    @OneToMany(mappedBy = "reviewBoard", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OrderBy("commentId desc")
+    private Set<Comment> comments = new LinkedHashSet<>();
 }
