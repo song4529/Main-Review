@@ -29,7 +29,7 @@ public class CommentController {
     private final UserService userService;
     private final ReviewBoardService reviewBoardService;
 
-    @PostMapping("/{review-id}/users/{user-id}/comments")
+    @PostMapping("/{review-id}/users/{user-id}/comments") // 댓글 작성
     public ResponseEntity postComment(@PathVariable("review-id") @Positive long reviewId,
                                       @PathVariable("user-id") @Positive long userId,
                                       @RequestBody @Valid CommentDto.Post requestBody) {

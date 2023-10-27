@@ -17,7 +17,9 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     public Comment createComment(ReviewBoard reviewBoard, User user, Comment comment) {
+        //유저 정보를 가져와서 comment에 넣어준다
         comment.setUser(user);
+        //게시글 정보를 가져와서 comment에 넣어준다
         comment.setReviewBoard(reviewBoard);
 
         return commentRepository.save(comment);

@@ -56,12 +56,12 @@ public class ReviewBoardController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{review-id}")
+    @GetMapping("/{review-id}") //단일 게시글 확인
     public ResponseEntity getReviewBoard(@PathVariable("review-id") @Positive long reviewId) {
         return null;
     }
 
-    @GetMapping
+    @GetMapping // 다중 게시글 확인
     public ResponseEntity getAllReviewBoards(@Positive @RequestParam int page,
                                              @Positive @RequestParam int size) {
         return null;
