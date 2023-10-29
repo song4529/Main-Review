@@ -11,6 +11,7 @@ import com.project.moviepop.user.entity.User;
 import com.project.moviepop.user.service.UserService;
 import com.project.moviepop.utils.UriComponent;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -50,10 +52,32 @@ public class CommentController {
                                        @PathVariable("user-id") @Positive long userId,
                                        @RequestBody @Valid CommentDto.Patch requestBody) {
         requestBody.setCommentId(commentId);
-        Comment comment = commentService.updateComment(userId, mapper.commentPatchDtoToComment(requestBody));
+        Comment comment = commentService.updateComment(userId, commentMapper.commentPatchDtoToComment(requestBody));
 
-        return new ResponseEntity (
+        return new ResponseEntity(
                 new ResponseDto.SingleResponseDto(commentMapper.commentToCommentPatchResponseDto(comment)),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/{comment-id}")
+    public ResponseEntity getComment(@PathVariable("comment-id") @Positive long commentId) {
+        Comment comment = commentService.findComment(commentId);
+
+        return new ResponseEntity(
+                new ResponseDto.SingleResponseDto<>(commentMapper.commentToCommentResponseDto(comment)),
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping
+    public ResponseEntity getComments(@Positive int page,
+                                      @Positive int size) {
+        Page<Comment> pageComments = commentService.findComments(page, size);
+        List<Comment> comments = pageComments.getContent();
+
+        return new ResponseEntity(
+                new ResponseDto.MultipleResponseDto(commentMapper.commentsToCommentResponseDtos(comments), pageComments),
                 HttpStatus.OK
         );
     }
