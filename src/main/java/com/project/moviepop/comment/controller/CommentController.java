@@ -81,4 +81,12 @@ public class CommentController {
                 HttpStatus.OK
         );
     }
+
+    @DeleteMapping("/{comment-id}/users/{user-id}")
+    public ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId,
+                                        @PathVariable("user-id") @Positive long userId) {
+        commentService.deleteComment(userId, commentId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
