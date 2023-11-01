@@ -55,4 +55,12 @@ public class CommentService {
                 page - 1, size, Sort.by("commentId").descending())
         );
     }
+
+    public void deleteComment(long userId, long commentId) {
+        Comment comment = findComment(commentId);
+        if(comment.getUser().getUserId() != userId)
+            throw new BusinessLogicException(ExceptionCode.CANNOT_UPDATE_COMMENT);
+
+        commentRepository.deleteById(commentId);
+    }
 }
