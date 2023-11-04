@@ -19,6 +19,11 @@ import java.util.concurrent.Future;
 
 public class MovieApi {
     public static Set<String> getMovieList() {
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        Set<String> movieCodeSet = new HashSet<>();
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5); // 동시 요청 수
+
         return null;
     }
 }
