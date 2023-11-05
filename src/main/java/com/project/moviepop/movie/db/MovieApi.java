@@ -1,5 +1,6 @@
 package com.project.moviepop.movie.db;
 
+import com.project.moviepop.movie.entity.Movie;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -68,5 +69,10 @@ public class MovieApi {
         }
 
         return movieCodeSet;
+    }
+
+    public static List<Movie> getMovieDetail(Set<String> movieCodes) {
+
+        return null;
     }
 }
