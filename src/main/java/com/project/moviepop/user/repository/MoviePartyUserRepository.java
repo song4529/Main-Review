@@ -1,4 +1,4 @@
-package com.project.moviepop.user.mapper;
+package com.project.moviepop.user.repository;
 
 import com.project.moviepop.user.entity.MoviePartyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
